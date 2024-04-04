@@ -28,4 +28,11 @@ public class Utils {
         input.close();
         System.exit(exitCode);
     }
+
+    public static void exit(String msg, int exitCode) {
+        if (!(msg.trim().equals(""))) {
+            System.out.println(msg);
+        }
+        System.exit(exitCode);
+    }
 }
