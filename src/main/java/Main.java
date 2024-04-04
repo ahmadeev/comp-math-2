@@ -1,3 +1,4 @@
+import equations.EquationOne;
 import utils.Methods;
 
 import java.util.Scanner;
@@ -17,12 +18,16 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        Methods.Halving.getRoot(-2, -1, 0.01);
-        exit("", input,0);
+/*        Methods.Halving.getRoot(-2, -1, 0.01);
+        exit("", input,0);*/
 
         int inputMode = getInputMode(input);
         int objectCode = getObjectCode(input, inputMode);
         int methodNumber = getMethodNumber(input, inputMode);
+
+        if (objectCode == 1 && methodNumber == 1) {
+            Methods.Halving.getRoot(-2, -1, 0.01, new EquationOne());
+        }
 
         exit("", input,0);
     }

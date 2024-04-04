@@ -1,18 +1,20 @@
 package utils;
 
+import equations.Equations;
+import equations.*;
+
 import static java.lang.Math.abs;
 import static java.lang.Math.log;
-import static utils.Equations.getEquationOneValue;
 import static utils.Utils.exit;
 
 public class Methods {
 
     public class Halving {
-        public static void getRoot(double a, double b, double precision) {
+        public static void getRoot(double a, double b, double precision, Equations equation) {
             double lowerBoundary = a;
             double higherBoundary = b;
-            double lowerBoundaryValue = getEquationOneValue(lowerBoundary);;
-            double higherBoundaryValue = getEquationOneValue(higherBoundary);
+            double lowerBoundaryValue = equation.getEquationValue(lowerBoundary);
+            double higherBoundaryValue = equation.getEquationValue(higherBoundary);
             double center;
             double centerValue;
 
@@ -20,14 +22,14 @@ public class Methods {
             int counter = 0;
             while (counter < reps) {
                 center = lowerBoundary + (higherBoundary - lowerBoundary) / 2;
-                centerValue = getEquationOneValue(center);
+                centerValue = equation.getEquationValue(center);
 
                 if (lowerBoundaryValue < 0 && centerValue > 0) {
                     higherBoundary = center;
-                    higherBoundaryValue = getEquationOneValue(higherBoundary);
+                    higherBoundaryValue = equation.getEquationValue(higherBoundary);
                 } else if (centerValue < 0 && higherBoundaryValue > 0) {
                     lowerBoundary = center;
-                    lowerBoundaryValue = getEquationOneValue(lowerBoundary);
+                    lowerBoundaryValue = equation.getEquationValue(lowerBoundary);
                 } else {
                     exit("я усталь", 1);
                 }
