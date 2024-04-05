@@ -12,12 +12,28 @@ public class Utils {
             return num;
         } catch (InputMismatchException e) {
             String errmsg = "Введенная строка не является целым числом!";
-            exit(errmsg, input, -1);
-            return -1;
+            exit(errmsg, input, 1);
+            return 0;
         } catch (NoSuchElementException | IllegalStateException e) {
             String errmsg = e.getMessage();
-            exit(errmsg, input, -1);
-            return -1;
+            exit(errmsg, input, 1);
+            return 0;
+        }
+    }
+
+    public static double getNextDouble(Scanner input) {
+        double num;
+        try {
+            num = input.nextDouble();
+            return num;
+        } catch (InputMismatchException e) {
+            String errmsg = "Введенная строка не является числом!";
+            exit(errmsg, input, 1);
+            return 0;
+        } catch (NoSuchElementException | IllegalStateException e) {
+            String errmsg = e.getMessage();
+            exit(errmsg, input, 1);
+            return 0;
         }
     }
 

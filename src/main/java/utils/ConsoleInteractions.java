@@ -2,9 +2,12 @@ package utils;
 
 import java.util.Scanner;
 
+import equations.EquationOne;
+import equations.EquationThree;
+import equations.EquationTwo;
 import exceptions.InvalidInputException;
-import static utils.Utils.exit;
-import static utils.Utils.getNextInt;
+
+import static utils.Utils.*;
 
 public class ConsoleInteractions {
     public static int getInputMode(Scanner input) {
@@ -25,7 +28,7 @@ public class ConsoleInteractions {
             return inputMode;
         } catch (InvalidInputException e) {
             String errmsg = e.getMessage();
-            exit(errmsg, input, -1);
+            exit(errmsg, input, 1);
             return -1;
         }
     }
@@ -34,12 +37,12 @@ public class ConsoleInteractions {
         int objectCode;
         switch(inputMode) {
             case 1: {
-                System.out.println("""
+                System.out.printf("""
                         Выберите уравнение:
-                        1. ( x^3 - x + 4 = 0 ),
-                        2. -,
-                        3. -.
-                        """);
+                        1. ( %s ),
+                        2. ( %s ),
+                        3. ( %s ).
+                        \n""", EquationOne.EQUATION, EquationTwo.EQUATION, EquationThree.EQUATION);
                 System.out.print("Выберите номер уравнения: ");
                 try {
                     objectCode = getNextInt(input);
@@ -50,7 +53,7 @@ public class ConsoleInteractions {
                     return objectCode;
                 } catch (InvalidInputException e) {
                     String errmsg = e.getMessage();
-                    exit(errmsg, input, -1);
+                    exit(errmsg, input, 1);
                     return -1;
                 }
             }
@@ -71,7 +74,7 @@ public class ConsoleInteractions {
                     return objectCode;
                 } catch (InvalidInputException e) {
                     String errmsg = e.getMessage();
-                    exit(errmsg, input, -1);
+                    exit(errmsg, input, 1);
                     return -1;
                 }
             }
@@ -102,7 +105,7 @@ public class ConsoleInteractions {
                     return methodNumber;
                 } catch (InvalidInputException e) {
                     String errmsg = e.getMessage();
-                    exit(errmsg, input, -1);
+                    exit(errmsg, input, 1);
                     return -1;
                 }
             }
@@ -116,4 +119,10 @@ public class ConsoleInteractions {
         }
         return 0;
     }
+
+/*    public static double getBoundary(Scanner input) {
+        double boundary;
+        boundary = getNextDouble(input);
+        return boundary;
+    }*/
 }

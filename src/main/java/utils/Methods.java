@@ -5,12 +5,15 @@ import equations.*;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.log;
+import static java.util.Objects.isNull;
 import static utils.Utils.exit;
 
 public class Methods {
 
     public class Halving {
         public static void getRoot(double a, double b, double precision, Equations equation) {
+            if (isNull(equation) || a == 0 || b == 0 || precision == 0) exit("", 1);
+
             double lowerBoundary = a;
             double higherBoundary = b;
             double lowerBoundaryValue = equation.getEquationValue(lowerBoundary);
@@ -39,8 +42,14 @@ public class Methods {
                         lowerBoundary + (higherBoundary - lowerBoundary) / 2,
                         lowerBoundaryValue, higherBoundaryValue, abs(lowerBoundary - higherBoundary));
             }
+            System.out.println();
             System.out.printf("После %d итераций корень уравнения равен %f с точностью %f.",
                     reps, lowerBoundary + (higherBoundary - lowerBoundary) / 2, precision);
         }
+    }
+
+    public static double derivative(Equations equation, double x) {
+        if (isNull(equation)) exit("", 1);
+        return ((equation.getEquationValue(x + 1.0e-6) - equation.getEquationValue(x)) * 1.0e+6);
     }
 }
