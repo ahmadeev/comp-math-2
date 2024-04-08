@@ -71,6 +71,7 @@ public class Main {
                     break;
                 }
                 case 2: {
+                    Methods.Newton.getRoot(lowerBoundary, higherBoundary, precision, equation);
                     break;
                 }
                 case 3: {
