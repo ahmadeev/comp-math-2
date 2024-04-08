@@ -119,10 +119,4 @@ public class ConsoleInteractions {
         }
         return 0;
     }
-
-/*    public static double getBoundary(Scanner input) {
-        double boundary;
-        boundary = getNextDouble(input);
-        return boundary;
-    }*/
 }

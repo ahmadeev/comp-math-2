@@ -23,16 +23,9 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-/*        Methods.Halving.getRoot(-2, -1, 0.01);
-        exit("", input,0);*/
-
         int inputMode = getInputMode(input);
         int objectCode = getObjectCode(input, inputMode);
         int methodNumber = getMethodNumber(input, inputMode);
-
-/*        if (objectCode == 1 && methodNumber == 1) {
-            Methods.Halving.getRoot(-2, -1, 0.01, new EquationOne());
-        }*/
 
         if (inputMode == 1) {
             Equations equation = null;
@@ -54,9 +47,6 @@ public class Main {
                 }
             }
 
-/*            System.out.println(derivative(equation, 2.49));
-            exit("", input,0);*/
-
             System.out.print("Введите нижнюю границу отрезка: ");
             double lowerBoundary = getNextDouble(input);
             System.out.print("Введите верхнюю границу отрезка: ");
@@ -75,16 +65,17 @@ public class Main {
                     break;
                 }
                 case 3: {
+                    Methods.Iteration.getRoot(lowerBoundary, higherBoundary, precision, equation);
                     break;
                 }
                 default: {
-                    exit("ашипка", input,1);
+                    exit("Выбранного метода решения нелинейного уравнения не существует!", input,1);
                 }
             }
         } else if (inputMode == 2) {
             //  poka nichego
         } else {
-            exit("ашипка", input,1);
+            exit("Выбранного сценария работы программы не существует!", input,1);
         }
 
         exit("", input,0);

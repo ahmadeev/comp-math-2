@@ -1,7 +1,6 @@
 package utils;
 
 import equations.Equations;
-import equations.*;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.log;
@@ -52,29 +51,11 @@ public class Methods {
         public static void getRoot(double a, double b, double precision, Equations equation) {
             if (isNull(equation) || a == 0 || b == 0 || precision == 0) exit("Неверные входные данные!", 1);
 
+            int counter = 0;
             double previousX = a;
             double previousXValue = equation.getEquationValue(previousX);
             double previousXDerivativeValue = derivative(equation, previousX);
             double x = previousX - previousXValue / previousXDerivativeValue;
-
-            int counter = 0;
-            while (abs(previousX - x) > precision && abs(previousXValue) > precision) {
-                System.out.printf("%d.   x_i = %5.2f   f(x_i) = %5.2f   f'(x_i) = %5.2f   x_i+1 = %5.2f   | x_i+1 - x_i | = %5.2f\n",
-                        counter,
-                        previousX,
-                        previousXValue,
-                        previousXDerivativeValue,
-                        x,
-                        abs(x - previousX));
-
-                previousX = x;
-                previousXValue = equation.getEquationValue(previousX);
-                previousXDerivativeValue = derivative(equation, previousX);
-                x = previousX - previousXValue / previousXDerivativeValue;
-                counter++;
-
-            }
-
             System.out.printf("%d.   x_i = %5.2f   f(x_i) = %5.2f   f'(x_i) = %5.2f   x_i+1 = %5.2f   | x_i+1 - x_i | = %5.2f\n",
                     counter,
                     previousX,
@@ -82,11 +63,32 @@ public class Methods {
                     previousXDerivativeValue,
                     x,
                     abs(x - previousX));
-            counter++;
+
+            while (abs(previousX - x) > precision && abs(previousXValue) > precision) {
+                previousX = x;
+                previousXValue = equation.getEquationValue(previousX);
+                previousXDerivativeValue = derivative(equation, previousX);
+                x = previousX - previousXValue / previousXDerivativeValue;
+                counter++;
+                System.out.printf("%d.   x_i = %5.2f   f(x_i) = %5.2f   f'(x_i) = %5.2f   x_i+1 = %5.2f   | x_i+1 - x_i | = %5.2f\n",
+                        counter,
+                        previousX,
+                        previousXValue,
+                        previousXDerivativeValue,
+                        x,
+                        abs(x - previousX));
+            }
 
             System.out.println();
             System.out.printf("После %d итераций корень уравнения равен %f с точностью %f.",
-                    counter, x, precision);
+                    counter + 1, x, precision);
+
+        }
+    }
+
+    public class Iteration {
+        public static void getRoot(double a, double b, double precision, Equations equation) {
+            if (isNull(equation) || a == 0 || b == 0 || precision == 0) exit("Неверные входные данные!", 1);
 
         }
     }
