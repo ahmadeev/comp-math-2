@@ -1,13 +1,9 @@
-import equations.EquationOne;
-import equations.EquationThree;
-import equations.EquationTwo;
-import equations.Equations;
+import equations.*;
 import utils.Methods;
 
 import java.util.Scanner;
 
 import static utils.ConsoleInteractions.*;
-import static utils.Methods.derivative;
 import static utils.Utils.exit;
 import static utils.Utils.getNextDouble;
 
@@ -42,8 +38,12 @@ public class Main {
                     equation = new EquationThree();
                     break;
                 }
+                case 4: {
+                    equation = new EquationFour();
+                    break;
+                }
                 default: {
-                    exit("ашипка", input,1);
+                    exit("Выбранного уравнения не существует!", input,1);
                 }
             }
 

@@ -2,6 +2,7 @@ package utils;
 
 import java.util.Scanner;
 
+import equations.EquationFour;
 import equations.EquationOne;
 import equations.EquationThree;
 import equations.EquationTwo;
@@ -41,13 +42,14 @@ public class ConsoleInteractions {
                         Выберите уравнение:
                         1. ( %s ),
                         2. ( %s ),
-                        3. ( %s ).
-                        \n""", EquationOne.EQUATION, EquationTwo.EQUATION, EquationThree.EQUATION);
+                        3. ( %s ),
+                        4. ( %s ).
+                        \n""", EquationOne.EQUATION, EquationTwo.EQUATION, EquationThree.EQUATION, EquationFour.EQUATION);
                 System.out.print("Выберите номер уравнения: ");
                 try {
                     objectCode = getNextInt(input);
                     System.out.println();
-                    if (!(objectCode == 1 | objectCode == 2 | objectCode == 3)) {
+                    if (!(objectCode == 1 | objectCode == 2 | objectCode == 3 | objectCode == 4)) {
                         throw new InvalidInputException("Номер уравнения выбран неверно!");
                     }
                     return objectCode;

@@ -1,5 +1,6 @@
 package utils;
 
+import equations.EquationFour;
 import equations.Equations;
 
 import static java.lang.Math.abs;
@@ -11,7 +12,8 @@ public class Methods {
 
     public class Halving {
         public static void getRoot(double a, double b, double precision, Equations equation) {
-            if (isNull(equation) || a == 0 || b == 0 || precision == 0) exit("Неверные входные данные!", 1);
+            if (isNull(equation) || precision == 0) exit("Неверные входные данные!", 1);
+            if (getNumberOfRoots(equation, a, b) != 1) exit("Уравнение имеет больше одного корня на отрезке или не имеет корней совсем!", 1);
 
             double lowerBoundary = a;
             double higherBoundary = b;
@@ -49,12 +51,13 @@ public class Methods {
 
     public class Newton {
         public static void getRoot(double a, double b, double precision, Equations equation) {
-            if (isNull(equation) || a == 0 || b == 0 || precision == 0) exit("Неверные входные данные!", 1);
+            if (isNull(equation) || precision == 0) exit("Неверные входные данные!", 1);
+            if (getNumberOfRoots(equation, a, b) != 1) exit("Уравнение имеет больше одного корня на отрезке или не имеет корней совсем!", 1);
 
             int counter = 0;
             double previousX = a;
             double previousXValue = equation.getEquationValue(previousX);
-            double previousXDerivativeValue = derivative(equation, previousX);
+            double previousXDerivativeValue = getDerivative(equation, previousX);
             double x = previousX - previousXValue / previousXDerivativeValue;
             System.out.printf("%d.   x_i = %5.2f   f(x_i) = %5.2f   f'(x_i) = %5.2f   x_i+1 = %5.2f   | x_i+1 - x_i | = %5.2f\n",
                     counter,
@@ -67,7 +70,7 @@ public class Methods {
             while (abs(previousX - x) > precision && abs(previousXValue) > precision) {
                 previousX = x;
                 previousXValue = equation.getEquationValue(previousX);
-                previousXDerivativeValue = derivative(equation, previousX);
+                previousXDerivativeValue = getDerivative(equation, previousX);
                 x = previousX - previousXValue / previousXDerivativeValue;
                 counter++;
                 System.out.printf("%d.   x_i = %5.2f   f(x_i) = %5.2f   f'(x_i) = %5.2f   x_i+1 = %5.2f   | x_i+1 - x_i | = %5.2f\n",
@@ -88,13 +91,36 @@ public class Methods {
 
     public class Iteration {
         public static void getRoot(double a, double b, double precision, Equations equation) {
-            if (isNull(equation) || a == 0 || b == 0 || precision == 0) exit("Неверные входные данные!", 1);
+            if (isNull(equation) || precision == 0) exit("Неверные входные данные!", 1);
+            if (getNumberOfRoots(equation, a, b) != 1) exit("Уравнение имеет больше одного корня на отрезке или не имеет корней совсем!", 1);
 
         }
     }
 
-    public static double derivative(Equations equation, double x) {
+    public static double getDerivative(Equations equation, double x) {
         if (isNull(equation)) exit("", 1);
         return ((equation.getEquationValue(x + 1.0e-6) - equation.getEquationValue(x)) * 1.0e+6);
+    }
+
+    public static int getNumberOfRoots(Equations equation, double a, double b) {
+        int counter = 0;
+        double precision = 0.01;
+
+        double lowerBoundaryValue = equation.getEquationValue(a);
+        a += precision;
+        double higherBoundaryValue = equation.getEquationValue(a);
+        if ((lowerBoundaryValue < 0 && higherBoundaryValue >= 0) || (lowerBoundaryValue >= 0 && higherBoundaryValue < 0))
+            counter++;
+
+        while (a <= b) {
+            lowerBoundaryValue = higherBoundaryValue;
+            higherBoundaryValue = equation.getEquationValue(a);
+            if ((lowerBoundaryValue < 0 && higherBoundaryValue >= 0) || (lowerBoundaryValue >= 0 && higherBoundaryValue < 0))
+                counter++;
+
+            a += precision;
+        }
+
+        return counter;
     }
 }
