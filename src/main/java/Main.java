@@ -55,6 +55,7 @@ public class Main {
             double precision = getNextDouble(input);
             System.out.println();
 
+            input.close();
             switch(methodNumber) {
                 case 1: {
                     Methods.Halving.getRoot(lowerBoundary, higherBoundary, precision, equation);

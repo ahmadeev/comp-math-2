@@ -104,10 +104,10 @@ public class Methods {
 
     public static int getNumberOfRoots(Equations equation, double a, double b) {
         int counter = 0;
-        double precision = 0.01;
+        double step = 0.01;
 
         double lowerBoundaryValue = equation.getEquationValue(a);
-        a += precision;
+        a += step;
         double higherBoundaryValue = equation.getEquationValue(a);
         if ((lowerBoundaryValue < 0 && higherBoundaryValue >= 0) || (lowerBoundaryValue >= 0 && higherBoundaryValue < 0))
             counter++;
@@ -118,7 +118,7 @@ public class Methods {
             if ((lowerBoundaryValue < 0 && higherBoundaryValue >= 0) || (lowerBoundaryValue >= 0 && higherBoundaryValue < 0))
                 counter++;
 
-            a += precision;
+            a += step;
         }
 
         return counter;
