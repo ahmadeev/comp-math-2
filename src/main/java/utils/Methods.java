@@ -71,6 +71,7 @@ public class Methods {
                     previousXDerivativeValue,
                     x,
                     abs(x - previousX));
+            counter++;
 
             while (abs(previousX - x) > precision && abs(previousXValue) > precision) {
                 previousX = x;
@@ -89,16 +90,61 @@ public class Methods {
 
             System.out.println();
             System.out.printf("После %d итераций корень уравнения равен %f с точностью %f.\n",
-                    counter + 1, x, precision);
+                    counter, x, precision);
             System.out.printf("Уравнение имеет корни: %s", equation.getExpectedRoots());
         }
     }
 
     public static class Iteration {
+        public static double lambda;
+
         public static void getRoot(double a, double b, double precision, Equations equation) {
             if (isNull(equation) || precision == 0) exit("Неверные входные данные!", 1);
             if (getNumberOfRoots(equation, a, b) != 1) exit("Уравнение имеет больше одного корня на отрезке или не имеет корней совсем!", 1);
+            double previousX;
+            if (getDerivative(equation, a) > getDerivative(equation, b)) { previousX = a; } else { previousX = b; }
+            lambda = getLambda(equation, previousX, a, b);
+            //System.out.println(lambda);
+            double x = getPhi(equation, previousX, lambda);
+            int counter = 0;
+            System.out.printf("%d.   x_i = %5.2f   x_i+1 = %5.2f   phi(x_i+1) = %5.2f   f(x_i+1) = %5.2f   | x_i+1 - x_i | = %5.2f\n",
+                    counter,
+                    previousX,
+                    x,
+                    getPhi(equation, x, lambda),
+                    equation.getEquationValue(x),
+                    abs(x - previousX));
+            counter++;
 
+            while (abs(x - previousX) > precision) {
+                previousX = x;
+                x = getPhi(equation, previousX, lambda);
+
+                System.out.printf("%d.   x_i = %5.2f   x_i+1 = %5.2f   phi(x_i+1) = %5.2f   f(x_i+1) = %5.2f   | x_i+1 - x_i | = %5.2f\n",
+                        counter,
+                        previousX,
+                        x,
+                        getPhi(equation, x, lambda),
+                        equation.getEquationValue(x),
+                        abs(x - previousX));
+
+                counter++;
+            }
+            System.out.println();
+            System.out.printf("После %d итераций корень уравнения равен %f с точностью %f.\n",
+                    counter, x, precision);
+            System.out.printf("Уравнение имеет корни: %s", equation.getExpectedRoots());
+        }
+
+        public static double getLambda(Equations equation, double x, double a, double b) {
+            double maxDerivative = Math.max(abs(getDerivative(equation, a)), abs(getDerivative(equation, b)));
+            double sign = (getDerivative(equation, a) > 0 && getDerivative(equation, b) > 0) ? -1 : 1;
+            //System.out.println(sign);
+            return sign / maxDerivative;
+        }
+
+        public static double getPhi(Equations equation, double x, double lambda) {
+            return (x + lambda * equation.getEquationValue(x));
         }
     }
 
