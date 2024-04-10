@@ -10,7 +10,7 @@ import static utils.Utils.exit;
 
 public class Methods {
 
-    public class Halving {
+    public static class Halving {
         public static void getRoot(double a, double b, double precision, Equations equation) {
             if (isNull(equation) || precision == 0) exit("Неверные входные данные!", 1);
             if (getNumberOfRoots(equation, a, b) != 1) exit("Уравнение имеет больше одного корня на отрезке или не имеет корней совсем!", 1);
@@ -44,18 +44,23 @@ public class Methods {
                         lowerBoundaryValue, higherBoundaryValue, abs(lowerBoundary - higherBoundary));
             }
             System.out.println();
-            System.out.printf("После %d итераций корень уравнения равен %f с точностью %f.",
+            System.out.printf("После %d итераций корень уравнения равен %f с точностью %f.\n",
                     reps, lowerBoundary + (higherBoundary - lowerBoundary) / 2, precision);
+            System.out.printf("Уравнение имеет корни: %s", equation.getExpectedRoots());
         }
     }
 
-    public class Newton {
+    public static class Newton {
         public static void getRoot(double a, double b, double precision, Equations equation) {
             if (isNull(equation) || precision == 0) exit("Неверные входные данные!", 1);
             if (getNumberOfRoots(equation, a, b) != 1) exit("Уравнение имеет больше одного корня на отрезке или не имеет корней совсем!", 1);
 
             int counter = 0;
             double previousX = a;
+
+            if (equation.getEquationValue(a) * getSecondDerivative(equation, a) > 0) previousX = a;
+            else if (equation.getEquationValue(b) * getSecondDerivative(equation, b) > 0) previousX = b;
+
             double previousXValue = equation.getEquationValue(previousX);
             double previousXDerivativeValue = getDerivative(equation, previousX);
             double x = previousX - previousXValue / previousXDerivativeValue;
@@ -85,11 +90,11 @@ public class Methods {
             System.out.println();
             System.out.printf("После %d итераций корень уравнения равен %f с точностью %f.",
                     counter + 1, x, precision);
-
+            System.out.println(equation.getExpectedRoots());
         }
     }
 
-    public class Iteration {
+    public static class Iteration {
         public static void getRoot(double a, double b, double precision, Equations equation) {
             if (isNull(equation) || precision == 0) exit("Неверные входные данные!", 1);
             if (getNumberOfRoots(equation, a, b) != 1) exit("Уравнение имеет больше одного корня на отрезке или не имеет корней совсем!", 1);
@@ -99,7 +104,15 @@ public class Methods {
 
     public static double getDerivative(Equations equation, double x) {
         if (isNull(equation)) exit("", 1);
-        return ((equation.getEquationValue(x + 1.0e-6) - equation.getEquationValue(x)) * 1.0e+6);
+        double deltaX = 1.0e-3;
+        return ((equation.getEquationValue(x + deltaX) - equation.getEquationValue(x)) / deltaX);
+    }
+
+    public static double getSecondDerivative(Equations equation, double x) {
+        if (isNull(equation)) exit("", 1);
+        double deltaX = 1.0e-3;
+        return (equation.getEquationValue(x + deltaX) - 2 * equation.getEquationValue(x) + equation.getEquationValue(x - deltaX))
+                / (deltaX * deltaX);
     }
 
     public static int getNumberOfRoots(Equations equation, double a, double b) {

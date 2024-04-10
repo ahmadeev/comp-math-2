@@ -2,6 +2,7 @@ import equations.*;
 import utils.Methods;
 
 import java.util.Scanner;
+import java.util.concurrent.SynchronousQueue;
 
 import static utils.ConsoleInteractions.*;
 import static utils.Utils.exit;
@@ -46,6 +47,8 @@ public class Main {
                     exit("Выбранного уравнения не существует!", input,1);
                 }
             }
+
+            System.out.printf("Выбранное уравнение имеет корни: %s \n\n", equation.getExpectedRoots());
 
             System.out.print("Введите нижнюю границу отрезка: ");
             double lowerBoundary = getNextDouble(input);
