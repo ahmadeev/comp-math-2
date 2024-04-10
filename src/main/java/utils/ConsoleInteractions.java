@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import equations.EquationFour;
@@ -11,20 +13,20 @@ import exceptions.InvalidInputException;
 import static utils.Utils.*;
 
 public class ConsoleInteractions {
-    public static int getInputMode(Scanner input) {
 
+    public static int getInputMode(Scanner input) {
         System.out.println("""
-                Выберите режим работы программы:
-                1 -- нелинейное уравнение,
-                2 -- система нелинейных уравнений,
+                Выберите источник ввода:
+                1 -- клавиатура,
+                2 -- файл.
                 """);
-        System.out.print("Выберите номер режима: ");
+        System.out.print("Введите режим ввода входных данных: ");
         int inputMode;
         try {
             inputMode = getNextInt(input);
             System.out.println();
             if (!(inputMode == 1 | inputMode == 2)) {
-                throw new InvalidInputException("Такого режима работы программы не существует!");
+                throw new InvalidInputException("Такого режима ввода не существует!");
             }
             return inputMode;
         } catch (InvalidInputException e) {
@@ -34,9 +36,31 @@ public class ConsoleInteractions {
         }
     }
 
-    public static int getObjectCode(Scanner input, int inputMode) {
+    public static int getProgrammeMode(Scanner input) {
+        System.out.println("""
+                Выберите режим работы программы:
+                1 -- нелинейное уравнение,
+                2 -- система нелинейных уравнений,
+                """);
+        System.out.print("Выберите номер режима: ");
+        int programmeMode;
+        try {
+            programmeMode = getNextInt(input);
+            System.out.println();
+            if (!(programmeMode == 1 | programmeMode == 2)) {
+                throw new InvalidInputException("Такого режима работы программы не существует!");
+            }
+            return programmeMode;
+        } catch (InvalidInputException e) {
+            String errmsg = e.getMessage();
+            exit(errmsg, input, 1);
+            return -1;
+        }
+    }
+
+    public static int getObjectCode(Scanner input, int programmeMode) {
         int objectCode;
-        switch(inputMode) {
+        switch(programmeMode) {
             case 1: {
                 System.out.printf("""
                         Выберите уравнение:
@@ -87,9 +111,9 @@ public class ConsoleInteractions {
         return 0;
     }
 
-    public static int getMethodNumber(Scanner input, int inputMode) {
+    public static int getMethodNumber(Scanner input, int programmeMode) {
         int methodNumber;
-        switch(inputMode) {
+        switch(programmeMode) {
             case 1: {
                 System.out.println("""
                         Выберите метод решения уравнения:

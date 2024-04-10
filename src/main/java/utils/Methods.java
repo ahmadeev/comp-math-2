@@ -88,9 +88,9 @@ public class Methods {
             }
 
             System.out.println();
-            System.out.printf("После %d итераций корень уравнения равен %f с точностью %f.",
+            System.out.printf("После %d итераций корень уравнения равен %f с точностью %f.\n",
                     counter + 1, x, precision);
-            System.out.println(equation.getExpectedRoots());
+            System.out.printf("Уравнение имеет корни: %s", equation.getExpectedRoots());
         }
     }
 
